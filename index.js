@@ -2,6 +2,7 @@ const socketIO = require("socket.io");
 const http = require("http");
 const express = require("express");
 const cors = require("cors");
+const colors = require("colors"); // Added colors library
 const app = express();
 const server = http.createServer(app);
 const io = socketIO(server);
@@ -43,7 +44,7 @@ const createMessage = ({ senderId, receiverId, text, images }) => ({
 
 io.on("connection", (socket) => {
   // when connect
-  //   console.log(`a user is connected`);
+  console.log("USER CONNECTED".green); // Green text
 
   // take userId and socketId from user
   socket.on("addUser", (userId) => {
@@ -102,7 +103,7 @@ io.on("connection", (socket) => {
 
   //when disconnect
   socket.on("disconnect", () => {
-    // console.log(`a user disconnected!`);
+    console.log("USER DISCONNECTED!".red); // Red text
     removeUser(socket.id);
     io.emit("getUsers", users);
   });
